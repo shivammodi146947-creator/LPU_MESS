@@ -242,7 +242,6 @@
 
 
  -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -256,11 +255,16 @@
   font-family:Segoe UI,system-ui;
 }
 
+html,body{
+  height:100%;
+}
+
 body{
   margin:0;
   background:#000;
   display:flex;
   justify-content:center;
+  overflow:hidden;
 }
 
 /* ---------- TOP BAR ---------- */
@@ -279,26 +283,40 @@ body{
   font-weight:600;
   z-index:10;
 }
+
+.gif-wrapper {
+  object-fit: cover;
+  height: 100%;
+  width: auto;
+  transform: scale(1.23);
+  /* padding: 10px; */
+}
+
 .appbar span{
   position:absolute;
   right:16px;
   font-size:22px;
-  opacity:.9;
 }
 
-/* ---------- CARD ---------- */
+/* ---------- MAIN WRAPPER ---------- */
 .wrapper{
-  margin-top:70px;
-  width:92%;
+  margin-top:56px;
+  width:100%;
   max-width:420px;
+  height:calc(100vh - 56px);
   background:#fff;
-  border-radius:16px;
-  padding:16px;
-  box-shadow:0 8px 25px rgba(0,0,0,.25);
+  border-radius:16px 16px 0 0;
+  padding:16px 16px 24px;
   position:relative;
+
+  overflow-y:auto;
+  scrollbar-width:none;
+}
+.wrapper::-webkit-scrollbar{
+  display:none;
 }
 
-/* counter bubble */
+/* ---------- COUNTER ---------- */
 .counter{
   position:absolute;
   top:14px;
@@ -313,11 +331,10 @@ body{
   font-weight:700;
 }
 
-/* ---------- USER ROW ---------- */
+/* ---------- USER INFO ---------- */
 .row{
   display:flex;
   gap:14px;
-  margin-top:8px;
 }
 .avatar{
   width:96px;
@@ -335,55 +352,54 @@ body{
   font-weight:600;
 }
 
-/* ---------- SUB TEXT ---------- */
+/* ---------- TEXT BLOCKS ---------- */
 .sub{
-  margin-top:10px;
+  margin:14px 0 6px;
   font-weight:700;
 }
 
-/* ---------- DATE TIME ---------- */
 .datetime{
   display:flex;
   justify-content:space-between;
-  margin-top:12px;
+  margin:12px 0 10px;
   font-weight:700;
 }
 
-/* ---------- APPROVED ---------- */
 .approved{
   text-align:center;
-  margin:14px 0 6px;
+  margin:12px 0 14px;
   color:#22c55e;
   font-size:22px;
   font-weight:800;
 }
 
-/* ---------- VIDEO BOX ---------- */
+/* ---------- SCAN AREA ---------- */
 .scanbox{
-  border:14px solid #7c2d12;     /* brown border */
-  height:240px;
+  border:18px solid #7c2d12;     /* 🔥 THICKER like image */
+  min-height:360px;              /* 🔥 takes more space */
+  padding:18px;                  /* 🔥 inner gap */
   background:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;              /* 🔥 IMPORTANT */
+  overflow:hidden;
 }
 
-/* video perfectly fit */
 .scan-video{
-  width:100%;
-  height:100%;
+  width:120%;
+  height:250px;
+  border: none;
   object-fit:cover;
 }
 
-/* ---------- SECRET COLOR PICKER ---------- */
+/* ---------- SECRET ---------- */
 .secret{
   position:fixed;
   bottom:0;
   right:0;
   width:60px;
   height:60px;
-  opacity:0; /* invisible but clickable */
+  opacity:0;
 }
 .secret input{
   width:100%;
@@ -394,20 +410,17 @@ body{
 
 <body>
 
-<!-- TOP BAR -->
 <div class="appbar">
   Mess Pass
   <span>✕</span>
 </div>
 
-<!-- CARD -->
 <div class="wrapper">
 
-  <div class="counter" id="counter">30</div>
+  <div class="counter" id="counter">27</div>
 
   <div class="row">
-    <img class="avatar" src="shivam1.png" alt="User">
-
+    <img class="avatar" src="shivam1.png">
     <div class="details">
       <h1 id="meal">Lunch</h1>
       <p>12309834</p>
@@ -427,62 +440,34 @@ body{
 
   <div class="approved">Meal Approved</div>
 
-  <!-- VIDEO AREA -->
+  <!-- BIG SCAN AREA -->
   <div class="scanbox" id="box">
-    <video
-      class="scan-video"
-      autoplay
-      loop
-      muted
-      playsinline
-    >
-      <source src="GIF.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
+    <video class="scan-video gif-wrapper" autoplay loop muted playsinline>
+      <source src="GIF.mp4" type="video/mp4">
     </video>
   </div>
 
 </div>
 
-<!-- SECRET COLOR PICKER -->
 <div class="secret">
   <input type="color" id="picker" value="#7c2d12">
 </div>
 
 <script>
-/* Date + Time + Meal */
 function updateTime(){
-  const n = new Date();
-
-  date.textContent = n.toLocaleDateString("en-US",{
-    month:"short",day:"2-digit",year:"numeric"
-  });
-
-  time.textContent = n.toLocaleTimeString("en-US",{
-    hour:"2-digit",minute:"2-digit",hour12:true
-  });
-
-  const h = n.getHours();
-  meal.textContent =
-    h < 11 ? "Breakfast" :
-    h < 16 ? "Lunch" :
-    h < 19 ? "Tea" : "Dinner";
+  const n=new Date();
+  date.textContent=n.toLocaleDateString("en-US",{month:"short",day:"2-digit",year:"numeric"});
+  time.textContent=n.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",hour12:true});
+  const h=n.getHours();
+  meal.textContent=h<11?"Breakfast":h<16?"Lunch":h<19?"Tea":"Dinner";
 }
-setInterval(updateTime,1000);
-updateTime();
+setInterval(updateTime,1000);updateTime();
 
-/* Counter */
-let c = 27;
-setInterval(()=>{
-  counter.textContent = c--;
-  if(c < 0) c = 27;
-},1000);
+let c=27;
+setInterval(()=>{counter.textContent=c--;if(c<0)c=27},1000);
 
-/* Secret border color */
-picker.oninput = e => {
-  box.style.borderColor = e.target.value;
-};
+picker.oninput=e=>box.style.borderColor=e.target.value;
 </script>
 
 </body>
 </html>
-
