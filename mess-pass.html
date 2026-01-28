@@ -1,226 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=360, height=740, initial-scale=1.0, user-scalable=no">
 <title>Mess Pass</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  -webkit-tap-highlight-color: transparent;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
-html, body {
-  height: 100%;
-  width: 100%;
-  background: #000;
+body{
+  width:360px;
+  height:740px;
+  margin:0 auto;
+  background:#000;
+  overflow:hidden;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin: 0;
+/* ---------- APP BAR ---------- */
+.appbar{
+  height:56px;
+  background:#3f3f3f;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  font-weight:600;
+  position:relative;
 }
 
-/* ---------- TOP BAR ---------- */
-.appbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 56px;
-  background: #3a3a3a;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 600;
-  z-index: 1000;
-}
-
-.appbar span {
-  position: absolute;
-  right: 16px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-/* ---------- MAIN CARD ---------- */
-.card {
-  width: 100%;
-  max-width: 400px;
-  transform: scaleX(1.07);
-  transform: scaleY(1.32);
-  background: #fff;
-  border-radius: 16px 16px 0 0;
-  margin-top: 300px;
-  padding: 20px;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-  overflow-y: auto;
-  height: calc(100vh - 56px);
-  -webkit-overflow-scrolling: touch;
+.appbar .close{
+  position:absolute;
+  right:14px;
+  font-size:22px;
 }
 
 /* ---------- COUNTER ---------- */
-.counter {
-  position:fixed;
-  top:70px;
-  right:12px;
-  width:34px;
-  height:34px;
+.counter{
+  position:absolute;
+  top:68px;
+  right:14px;
+  width:32px;
+  height:32px;
   border-radius:50%;
   background:#d1d5db;
   display:flex;
   align-items:center;
   justify-content:center;
   font-weight:700;
-  z-index: 1001;
+  z-index:5;
 }
 
-
-/* ---------- PROFILE SECTION ---------- */
-.profile-section {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
+/* ---------- CARD ---------- */
+.card{
+  position:absolute;
+  top:56px;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#fff;
+  border-radius:18px 18px 0 0;
+  padding:18px;
+  overflow-y:auto;
 }
 
-.avatar {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  border: 3px solid #000;
-  object-fit: cover;
-  flex-shrink: 0;
+/* ---------- PROFILE ---------- */
+.profile{
+  display:flex;
+  gap:14px;
+  align-items:center;
 }
 
-.profile-info h1 {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: #000;
+.avatar{
+  width:94px;
+  height:94px;
+  border-radius:50%;
+  border:3px solid #000;
+  object-fit:cover;
 }
 
-.profile-info p {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 4px 0;
-  color: #000;
+.info h1{
+  font-size:27px;
+  font-weight:700;
 }
 
-/* ---------- COURSE INFO ---------- */
-.course-info {
-  font-size: 15px;
-  font-weight: 700;
-  margin: 20px 0 16px 0;
-  color: #000;
-  line-height: 1.4;
+.info p{
+  font-size:15px;
+  font-weight:600;
+  margin-top:4px;
+}
+
+/* ---------- COURSE ---------- */
+.course{
+  margin-top:18px;
+  font-size:15px;
+  font-weight:700;
 }
 
 /* ---------- DATE TIME ---------- */
-.datetime {
-  display: flex;
-  justify-content: space-between;
-  margin: 16px 0;
-  font-size: 16px;
-  font-weight: 700;
-  color: #000;
+.datetime{
+  margin-top:14px;
+  display:flex;
+  justify-content:space-between;
+  font-size:15px;
+  font-weight:700;
 }
 
-/* ---------- APPROVED TEXT ---------- */
-.approved-text {
-  text-align: center;
-  font-size: 24px;
-  font-weight: 800;
-  color: #22c55e;
-  margin: 24px 0;
-  letter-spacing: 0.5px;
+/* ---------- APPROVED ---------- */
+.approved{
+  margin:22px 0 6px;
+  text-align:center;
+  font-size:24px;
+  font-weight:800;
+  color:#22c55e;
+}
+
+/* ---------- RATE ---------- */
+.rate{
+  display:flex;
+  justify-content:center;
+  margin-bottom:10px;
+}
+
+.rate span{
+  border:1.5px solid #ef4444;
+  color:#ef4444;
+  padding:4px 16px;
+  border-radius:18px;
+  font-size:13px;
+  font-weight:700;
 }
 
 /* ---------- SCAN BOX ---------- */
-.scan-box {
-  width: 100%;
-  height: 320px;
-  border: 18px solid #7c2d12;
-  background: #fff;
-  margin-top: 10px;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
+.scan{
+  margin-top:8px;
+  height:310px;
+  border:18px solid #7c2d12;
+  background:#fff;
+  overflow:hidden;
 }
 
-.scan-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.scan video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-/* ---------- COLOR PICKER ---------- */
-.color-picker {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  opacity: 0;
-  transition: opacity 0.3s;
-  z-index: 1000;
+.color-picker{
+  position:fixed;
+  bottom:18px;
+  right:18px;
+  width:44px;
+  height:44px;
+  opacity:0.05;
+  z-index:20;
 }
 
-.color-picker:hover {
-  opacity: 1;
+.color-picker input{
+  width:100%;
+  height:100%;
+  border:none;
+  background:none;
 }
 
-.color-picker input {
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
+.color-picker:active,
+.color-picker:hover{
+  opacity:1;
 }
 
-/* Responsive for small phones */
-@media (max-width: 400px) {
-  .card {
-    padding: 16px;
-    border-radius: 12px 12px 0 0;
-  }
-  
-  .avatar {
-    width: 88px;
-    height: 88px;
-  }
-  
-  .profile-info h1 {
-    font-size: 26px;
-  }
-  
-  .profile-info p {
-    font-size: 15px;
-  }
-  
-  .scan-box {
-    height: 300px;
-  }
-}
-
-/* Prevent zoom on double tap */
-* {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-input, textarea {
-  -webkit-user-select: text;
-  user-select: text;
-}
 </style>
 </head>
 
@@ -228,24 +180,24 @@ input, textarea {
 
 <div class="appbar">
   Mess Pass
-  <span id="closeBtn">✕</span>
+  <div class="close">✕</div>
 </div>
 
-<div class="counter" id="counter">27</div>
+<div class="counter" id="counter">12</div>
 
 <div class="card">
 
-  <div class="profile-section">
-    <img class="avatar" src="shivam1.png" alt="Profile Picture">
-    <div class="profile-info">
-      <h1 id="meal">Lunch</h1>
-      <p>12309834</p>
-      <p>Sachin Burnwal</p>
-      <p>Centralized Mess 2</p>
+  <div class="profile">
+    <img src="shivam1.png" class="avatar">
+    <div class="info">
+      <h1 id="meal">Dinner</h1>
+      <p>12324448</p>
+      <p>Akanksh Rakesh</p>
+      <p>Mess-Centre-02</p>
     </div>
   </div>
 
-  <div class="course-info">
+  <div class="course">
     P132:B.Tech. (Computer Science and Engineering)(2023)
   </div>
 
@@ -254,117 +206,75 @@ input, textarea {
     <div id="time"></div>
   </div>
 
-  <div class="approved-text">Meal Approved</div>
+  <div class="approved">Meal Approved</div>
 
-  <div class="scan-box" id="scanBox">
-    <video class="scan-video" autoplay loop muted playsinline>
+  <div class="rate">
+    <span>⭐ RATE US</span>
+  </div>
+
+  <div class="scan">
+    <video autoplay muted loop playsinline>
       <source src="GIF.mp4" type="video/mp4">
     </video>
   </div>
 
-</div>
-
-<div class="color-picker">
+  <div class="color-picker">
   <input type="color" id="colorPicker" value="#7c2d12">
 </div>
 
+
+</div>
+
 <script>
-// Elements
+  const colorPicker = document.getElementById('colorPicker');
+const scanBox = document.querySelector('.scan');
+
+colorPicker.addEventListener('input', (e)=>{
+  scanBox.style.borderColor = e.target.value;
+});
+
+</script>
+
+<script>
 const counterEl = document.getElementById('counter');
 const dateEl = document.getElementById('date');
 const timeEl = document.getElementById('time');
 const mealEl = document.getElementById('meal');
-const colorPicker = document.getElementById('colorPicker');
-const scanBox = document.getElementById('scanBox');
-const closeBtn = document.getElementById('closeBtn');
 
-// Update time and date
-function updateDateTime() {
+function updateDateTime(){
   const now = new Date();
-  
-  // Format: Oct 10, 2025
-  dateEl.textContent = now.toLocaleDateString('en-US', {
-    month: 'short',
-    day: '2-digit',
-    year: 'numeric'
+
+  dateEl.textContent = now.toLocaleDateString('en-US',{
+    month:'short',
+    day:'2-digit',
+    year:'numeric'
   });
-  
-  // Format: 12:55 PM
-  timeEl.textContent = now.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true
+
+  timeEl.textContent = now.toLocaleTimeString('en-US',{
+    hour:'2-digit',
+    minute:'2-digit',
+    hour12:true
   });
-  
-  // Set meal based on time
-  const hour = now.getHours();
-  if (hour < 11) {
-    mealEl.textContent = 'Breakfast';
-  } else if (hour < 16) {
-    mealEl.textContent = 'Lunch';
-  } else if (hour < 19) {
-    mealEl.textContent = 'Tea';
-  } else {
-    mealEl.textContent = 'Dinner';
-  }
+
+  const h = now.getHours();
+  if(h < 11) mealEl.textContent = 'Breakfast';
+  else if(h < 16) mealEl.textContent = 'Lunch';
+  else if(h < 19) mealEl.textContent = 'Tea';
+  else mealEl.textContent = 'Dinner';
 }
 
-// Counter logic
-let count = 27;
-function updateCounter() {
+let count = 12;
+setInterval(()=>{
   counterEl.textContent = count;
   count--;
-  if (count < 0) count = 27;
-}
+  if(count < 0) count = 12;
+},1000);
 
-// Color picker
-colorPicker.addEventListener('input', (e) => {
-  scanBox.style.borderColor = e.target.value;
-});
-
-// Close button
-closeBtn.addEventListener('click', () => {
-  if (confirm('Close Mess Pass?')) {
-    // In real app, close window or navigate
-    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#fff;font-size:20px;">Mess Pass Closed</div>';
-  }
-});
-
-// Initialize
 updateDateTime();
-updateCounter();
-
-// Update every second
-setInterval(updateDateTime, 1000);
-setInterval(updateCounter, 1000);
-
-// Prevent zoom
-document.addEventListener('gesturestart', function(e) {
-  e.preventDefault();
-});
-
-// Handle mobile viewport
-function handleResize() {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-  
-  // Adjust card height
-  const card = document.querySelector('.card');
-  const appbarHeight = 56;
-  card.style.height = `calc(${window.innerHeight}px - ${appbarHeight}px)`;
-}
-
-window.addEventListener('resize', handleResize);
-window.addEventListener('orientationchange', handleResize);
-handleResize();
-
-// Load fallback if image not found
-document.querySelector('.avatar').onerror = function() {
-  this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCA5NiA5NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDgiIGN5PSI0OCIgcj0iNDgiIGZpbGw9IiNFM0UzRTMiLz4KPHBhdGggZD0iTTQ4IDM0QzQxLjM3MjYgMzQgMzYgMzkuMzcyNiAzNiA0NkMzNiA1Mi42Mjc0IDQxLjM3MjYgNTggNDggNThDNTQuNjI3NCA1OCA2MCA1Mi42Mjc0IDYwIDQ2QzYwIDM5LjM3MjYgNTQuNjI3NCAzNCA0OCAzNFpNNDggNjJDMzguMDU5IDYyIDMwIDcwLjA1OSAzMCA4MEg2NkM2NiA3MC4wNTkgNTcuOTQxIDYyIDQ4IDYyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+';
-  this.alt = 'Profile Image';
-};
+setInterval(updateDateTime,1000);
 </script>
+
+
 
 </body>
 </html>
-
