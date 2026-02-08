@@ -20,7 +20,6 @@
           Roboto,
           sans-serif;
       }
-
       body {
         background: #c1bebe;
         height: 100vh;
@@ -29,7 +28,6 @@
         align-items: center;
       }
 
-      /* TOP BAR */
       .appbar {
         height: 56px;
         width: 100%;
@@ -42,14 +40,12 @@
         font-weight: 600;
         position: relative;
       }
-
       .appbar .close {
         position: absolute;
         right: 16px;
         font-size: 22px;
       }
 
-      /* COUNTER */
       .counter {
         position: absolute;
         top: 80px;
@@ -65,7 +61,6 @@
         font-size: large;
       }
 
-      /* CARD CONTAINER (CENTERED) */
       .wrapper {
         flex: 1;
         width: 100%;
@@ -75,7 +70,6 @@
         justify-content: center;
       }
 
-      /* CARD */
       .card {
         width: 92%;
         height: 98%;
@@ -85,14 +79,12 @@
         padding: 18px;
       }
 
-      /* PROFILE */
       .profile {
         display: flex;
         gap: 14px;
         align-items: center;
         margin-top: 15px;
       }
-
       .avatar {
         width: 96px;
         height: 96px;
@@ -104,21 +96,17 @@
         font-size: 28px;
         font-weight: 700;
       }
-
       .info p {
         font-size: 15px;
         font-weight: 640;
         margin-top: 4px;
       }
 
-      /* COURSE */
       .course {
         margin-top: 25px;
         font-size: 15px;
         font-weight: 600;
       }
-
-      /* DATE TIME */
       .datetime {
         margin-top: 14px;
         display: flex;
@@ -127,7 +115,6 @@
         font-weight: 700;
       }
 
-      /* APPROVED */
       .approved {
         margin: 35px 0 6px;
         text-align: center;
@@ -135,14 +122,11 @@
         font-weight: 700;
         color: #22c55e;
       }
-
-      /* RATE */
       .rate {
         display: flex;
         justify-content: center;
         margin-bottom: 10px;
       }
-
       .rate span {
         border: 1.5px solid #ef4444;
         color: #ef4444;
@@ -152,9 +136,8 @@
         font-weight: 700;
       }
 
-      /* SCAN BOX */
       .scan {
-        height: 300px; /* 🔑 fixed height */
+        height: 300px;
         border: 18px solid #7c2d12;
         width: 100%;
         background: #fff;
@@ -162,7 +145,6 @@
         align-items: center;
         justify-content: center;
       }
-
       .scan video {
         width: 100%;
         height: 100%;
@@ -182,22 +164,22 @@
     <div class="wrapper">
       <div class="card">
         <div class="profile">
-          <img src="shivam1.png" class="avatar" />
+          <img id="avatar" src="shivam1.png" class="avatar" />
           <div class="info">
-            <h1>Dinner</h1>
-            <p>12309834</p>
-            <p>Sachin Burnwal</p>
-            <p>Mess BS-10</p>
+            <h1 id="mealType">Dinner</h1>
+            <p id="studentId">12309834</p>
+            <p id="studentName">Sachin Burnwal</p>
+            <p id="messName">Mess BS-10</p>
           </div>
         </div>
 
-        <div class="course">
+        <div class="course" id="course">
           P132:B.Tech. (Computer Science and Engineering)(2023)
         </div>
 
         <div class="datetime">
-          <div>Jan 24, 2026</div>
-          <div>07:42 PM</div>
+          <div id="date">Jan 24, 2026</div>
+          <div id="time">07:42 PM</div>
         </div>
 
         <div class="approved">Meal Approved</div>
@@ -211,42 +193,81 @@
             <source src="GIF.mp4" type="video/mp4" />
           </video>
         </div>
-        <div
-          style="
-            position: fixed;
-            bottom: 16px;
-            right: 16px;
-            opacity: 0;
-            z-index: 999;
-          "
-        >
+        <div style="position: fixed; bottom: 16px; right: 16px; z-index: 999; opacity: 0;" >
           <input type="color" id="colorPicker" value="#7c2d12" />
         </div>
       </div>
     </div>
 
+    <!-- COLOR PICKER -->
     <script>
-const colorPicker = document.getElementById('colorPicker');
-const scanBox = document.querySelector('.scan');
+      const colorPicker = document.getElementById("colorPicker");
+      const scanBox = document.querySelector(".scan");
+      if (colorPicker) {
+        colorPicker.addEventListener("input", function (e) {
+          scanBox.style.borderColor = e.target.value;
+        });
+      }
+    </script>
 
-colorPicker.addEventListener('input', function(e){
-  scanBox.style.borderColor = e.target.value;
-});
-</script>
-<script>
-const counterEl = document.querySelector('.counter');
-let count = 12;
+    <!-- 🔥 MAIN DYNAMIC SCRIPT -->
+    <script>
+      // 🔹 STUDENT DATA
+      const messData = {
+        studentId: "12309834",
+        studentName: "Sachin Burnwal",
+        messName: "Mess BS-10",
+        course: "P132:B.Tech. (Computer Science and Engineering)(2023)",
+        avatar: "shivam1.png",
+      };
 
-setInterval(() => {
-  counterEl.textContent = count;
-  count--;
-  if(count < 0) count = 30;
-}, 1000);
-</script>
+      // fill student info
+      document.getElementById("studentId").textContent = messData.studentId;
+      document.getElementById("studentName").textContent = messData.studentName;
+      document.getElementById("messName").textContent = messData.messName;
+      document.getElementById("course").textContent = messData.course;
+      document.getElementById("avatar").src = messData.avatar;
 
+      // 🔥 DATE + TIME ONCE + MEAL DETECTION
+      function setMealAndTime() {
+        const now = new Date();
+        const hour = now.getHours();
+        let meal = "Mess Closed";
 
+        if (hour >= 7 && hour < 10) {
+          meal = "Breakfast";
+        } else if (hour >= 11 && hour < 15) {
+          meal = "Lunch";
+        } else if (hour >= 16 && hour < 18) {
+          meal = "Tea";
+        } else if (hour >= 19 && hour < 22) {
+          meal = "Dinner";
+        }
+
+        document.getElementById("mealType").textContent = meal;
+
+        document.getElementById("date").textContent = now.toLocaleDateString(
+          "en-IN",
+          { day: "numeric", month: "short", year: "numeric" },
+        );
+
+        document.getElementById("time").textContent = now.toLocaleTimeString(
+          "en-IN",
+          { hour: "2-digit", minute: "2-digit" },
+        );
+      }
+
+      setMealAndTime();
+
+      // 🔹 COUNTER TIMER
+      const counterEl = document.querySelector(".counter");
+      let count = 30;
+
+      setInterval(() => {
+        counterEl.textContent = count;
+        count--;
+        if (count < 0) count = 30;
+      }, 1000);
+    </script>
   </body>
 </html>
-
-
-
